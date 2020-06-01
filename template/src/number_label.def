@@ -1,0 +1,8 @@
+LIBRARY   number_label
+EXPORTS
+    number_label_create @1
+    number_label_cast @2
+    number_label_set_format @3
+    number_label_set_decimal_font_size_scale @4
+    number_label_set_value @5
+    number_label_register @6
