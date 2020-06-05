@@ -28,9 +28,11 @@ static ret_t on_close(void* ctx, event_t* e) {
 }
 
 ret_t application_init() {
+  widget_t* win = NULL;
+
   template_register();
 
-  widget_t* win = window_open("main");
+  win = window_open("main");
 
   widget_child_on(win, "close", EVT_CLICK, on_close, NULL); 
 
