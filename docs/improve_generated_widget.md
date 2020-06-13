@@ -11,7 +11,7 @@
 
 ## 3. 完善控件的 style 文件
 
-根据自己的需要完善 assets/default/raw/styles/main.xml
+根据自己的需要完善 design/default/styles/main.xml
 
 如二维码控件的 style 改为：
 
@@ -23,10 +23,11 @@
   </style>
 </qr>
 ```
+> 也可以使用 Designer 打开项目，之后打开该文件进行编辑。
 
 ## 4. 完善 demo 的 ui 文件
 
-根据自己的需要完善 assets/default/raw/ui/main.xml
+根据自己的需要完善 design/default/ui/main.xml
 
 如二维码控件的 ui 改为：
 
@@ -36,6 +37,7 @@
   <button x="c" y="b:30" w="80" h="30" name="close" text="Close"/>
 </window>
 ```
+> 也可以使用 Designer 打开项目，之后打开该文件进行编辑。
 
 ## 5. 完善 demo
 
@@ -43,7 +45,7 @@
 
 ## 6. 编译运行
 
-* 1. 生成 IDL 和动态库导出符号表
+* 1. 生成 IDL 和 动态库导出符号表
 
 ```
 . gen.sh
@@ -54,22 +56,20 @@
 ```
 python scripts/update_res.py all
 ```
+> 也可以使用 Designer 打开项目，之后点击 “打包” 按钮进行生成
+> 如果资源发生修改，则需要重新生成资源。
 
 * 3. 编译
 
 ```
 scons
 ```
+> 注意：
+> 编译前先确认 SConstruct 文件中的 awtk_root 是否为 awtk 所在目录，不是则修改。
+> 默认使用动态库的形式，如果需要使用静态库，修改 SConstruct 文件中的 BUILD_SHARED = 'false' 即可。
 
-* 将 awtk.dll 拷贝到 bin 目录
-
-```
- cp ../awtk/bin/awtk.dll bin/
-```
 
 * 运行
 ```
- ./bin/demo_xxx
+ ./bin/demo
 ```
-
-> 把 xxx 换成实际的名称。

@@ -34,10 +34,10 @@ cd awtk-widget-generator
 
 使用 index.js 脚本生成自定义控件的代码和工程，参数是自定义控件的描述文件。
 
-> 生成的文件会放到上一级目录，与 awtk 并列。
+> 如果不指定输出目录，则默认生成的文件会放到上一级目录，与 awtk 并列。
 
 ```
-Usage: node index.js widget_desc.json
+Usage: node index.js widget_desc.json [output_dir]
 ```
 
 如：

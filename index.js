@@ -11,22 +11,22 @@ class CodeGen {
     return result;
   }
 
-  saveResult(json, header, content) {
-    const name = json.name;
+  saveResult(json, header, content, relativePath) {
     const foldName = this.getFolderName(json);
     const target = this.getTargetRoot(foldName);
-    const filenamePrefix = path.join(target, 'src', name, name);
+    const filenamePrefix = path.join(target, relativePath ? relativePath : `src/${json.name}/${json.name}`);
     const headerFileName = `${filenamePrefix}.h`
     const contentFileName = `${filenamePrefix}.c`
 
-    fs.writeFileSync(headerFileName, "\ufeff" + header);
-    fs.writeFileSync(contentFileName, "\ufeff" + content);
+    fs.writeFileSync(headerFileName, '\ufeff' + header);
+    fs.writeFileSync(contentFileName, '\ufeff' + content);
 
     console.log(`output to ${headerFileName} and ${contentFileName}`);
   }
 
   genSourceCode(json) {
     this.saveResult(json, this.genHeader(json), this.genContent(json));
+    this.saveResult(json, this.genRegisterHeader(json), this.genRegisterContent(json),`src/${json.name}_register`);
   }
 
   getFolderName(json) {
@@ -54,7 +54,6 @@ class CodeGen {
     this.mkdirIfNotExist(path.join(target, 'scripts'));
     this.mkdirIfNotExist(path.join(target, 'demos'));
     this.mkdirIfNotExist(path.join(target, 'docs'));
-
   }
 
   fileReplaceContent(src, dst, items) {
@@ -71,6 +70,9 @@ class CodeGen {
   }
 
   getTargetRoot(foldName) {
+    if (this.outputPath) {
+      return this.outputPath;
+    }
     return path.join('..', 'awtk-widget-' + foldName);
   }
 
@@ -88,6 +90,7 @@ class CodeGen {
     }];
 
     const files = ['SConstruct',
+      'project.json',
       'gen.sh',
       'README.md',
       'format.sh',
@@ -95,16 +98,17 @@ class CodeGen {
       '.gitignore',
       'src/SConscript',
       'demos/SConscript',
-      'demos/main.c',
+      'demos/window_main.c',
+      'demos/app_main.c',
       'scripts/update_res.py',
       'tests/SConscript',
       'tests/main.cc',
       'tests/template_test.cc',
-      'assets/default/raw/ui/main.xml',
-      'assets/default/raw/styles/main.xml'
+      'design/default/ui/main.xml',
+      'design/default/styles/main.xml'
     ]
 
-    const folders = ['assets']
+    const folders = ['design']
 
     folders.forEach(iter => {
       const from = path.join('template', iter);
@@ -247,23 +251,11 @@ widget_t* ${className}_cast(widget_t* widget);
 
 ${propSetterDecls}
 
-/**
- * @method  ${className}_register
- * 注册控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t ${className}_register(void);
-
 ${propDefines}
 
 #define WIDGET_TYPE_${uclassName} "${className}"
 
 #define ${uclassName}(widget) ((${className}_t*)(${className}_cast(WIDGET(widget))))
-
-
 
 /*public for subclass and runtime type check*/
 TK_EXTERN_VTABLE(${className});
@@ -276,11 +268,11 @@ END_C_DECLS
     return result;
   }
 
-  genFileComment(json, ext) {
+  genFileComment(json, ext, name) {
     const now = new Date();
     const team = json.team;
     const author = json.author;
-    const className = json.name;
+    const className = name ? name : json.name;
     const desc = json.desc || "";
     const copyright = json.copyright;
 
@@ -291,7 +283,7 @@ END_C_DECLS
 
     return `/**
  * File:   ${className}.${ext}
- * Author: AWTK Develop Team
+ * Author: ${team}
  * Brief:  ${desc}
  *
  * Copyright (c) ${year} - ${year} ${copyright}
@@ -632,13 +624,63 @@ widget_t* ${className}_cast(widget_t* widget) {
   return_value_if_fail(WIDGET_IS_INSTANCE_OF(widget, ${className}), NULL);
 
   return widget;
-}                          
+}
+`
+    return result;
+  }
 
+  genRegisterHeader(json) {
+    const desc = json.desc || "";
+    const className = json.name;
+    const uclassName = className.toUpperCase();
+
+    let result = `${this.genFileComment(json, 'h', `${className}_register`)}
+
+#ifndef TK_${uclassName}_REGISTER_H
+#define TK_${uclassName}_REGISTER_H
+
+#include "base/widget.h"
+
+BEGIN_C_DECLS
+
+/**
+ * @method  ${className}_register
+ * 注册控件。
+ *
+ * @annotation ["global"]
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t ${className}_register(void);
+
+END_C_DECLS
+
+#endif /*TK_${uclassName}_REGISTER_H*/
+`
+
+    return result;
+  }
+
+  genRegisterContent(json) {
+    const className = json.name;
+    const uclassName = className.toUpperCase();
+    let defaultInclude = this.genIncludes(`${className}_register`);
+
+    if (json.includes) {
+      defaultInclude += json.includes.map(iter => {
+        return `#include "${iter}"`
+      }).join('');
+    }
+
+    let result = `${this.genFileComment(json, 'c')}
+
+${defaultInclude}
 #include "base/widget_factory.h"
+#include "${className}/${className}.h"
 
 ret_t ${className}_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_${uclassName}, ${className}_create);
-}                          
+}
 `
     return result;
   }
@@ -647,9 +689,10 @@ ret_t ${className}_register(void) {
     this.genJson(JSON.parse(fs.readFileSync(filename).toString()));
   }
 
-  static run(filename) {
+  static run(sourceIDL, outputPath) {
     const gen = new CodeGen();
-    gen.genFile(filename);
+    gen.outputPath = outputPath
+    gen.genFile(sourceIDL);
   }
 }
 
@@ -658,4 +701,4 @@ if (process.argv.length < 3) {
   process.exit(0);
 }
 
-CodeGen.run(process.argv[2]);
+CodeGen.run(process.argv[2], process.argv[3]);
