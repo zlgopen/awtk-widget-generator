@@ -50,14 +50,17 @@
 ```
 . gen.sh
 ```
+> 注意: 如果执行失败，请确定gen.sh中的 awtk 路径是否正确
 
 * 2. 生成资源
+
+可以使用资源生成工具 update_res.py 生成资源，更多信息请参考 [资源生成工具](../template/scripts/README.md)
 
 ```
 python scripts/update_res.py all
 ```
 > 也可以使用 Designer 打开项目，之后点击 “打包” 按钮进行生成
-> 如果资源发生修改，则需要重新生成资源。
+> 注意：如果资源发生修改，需要重新生成资源。
 
 * 3. 编译
 
