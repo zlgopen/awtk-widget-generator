@@ -122,6 +122,20 @@ class CodeGen {
       const to = path.join(target, iter)
       this.fileReplaceContent(from, to, items);
     })
+
+    if (this.awtkPath) {
+      const files = ['SConstruct', 'gen.sh', 'scripts/update_res.py'];
+      const items = [{
+        from: '\\.\\./awtk',
+        to: this.awtkPath
+      }];
+
+      files.forEach(iter => {
+        const from = path.join(target, iter);
+        const to = path.join(target, iter)
+        this.fileReplaceContent(from, to, items);
+      })
+    }
   }
 
   genProject(json) {
@@ -689,9 +703,10 @@ ret_t ${className}_register(void) {
     this.genJson(JSON.parse(fs.readFileSync(filename).toString()));
   }
 
-  static run(sourceIDL, outputPath) {
+  static run(sourceIDL, outputPath, awtkPath) {
     const gen = new CodeGen();
     gen.outputPath = outputPath
+    gen.awtkPath = awtkPath
     gen.genFile(sourceIDL);
   }
 }
@@ -701,4 +716,4 @@ if (process.argv.length < 3) {
   process.exit(0);
 }
 
-CodeGen.run(process.argv[2], process.argv[3]);
+CodeGen.run(process.argv[2], process.argv[3], process.argv[4]);
