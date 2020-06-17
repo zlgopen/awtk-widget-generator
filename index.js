@@ -106,22 +106,54 @@ class CodeGen {
       'tests/template_test.cc',
       'design/default/ui/main.xml',
       'design/default/styles/main.xml'
-    ]
+    ];
 
     const folders = ['design']
 
     folders.forEach(iter => {
       const from = path.join('template', iter);
-      const to = path.join(target, iter)
+      const to = path.join(target, iter);
       fse.copySync(from, to);
-      console.log(`copy ${from} => ${to}`)
+      console.log(`copy ${from} => ${to}`);
     })
 
     files.forEach(iter => {
       const from = path.join('template', iter);
-      const to = path.join(target, iter)
+      const to = path.join(target, iter);
       this.fileReplaceContent(from, to, items);
     })
+
+    if (files.indexOf('project.json') >= 0) {
+      const now = new Date();
+      const day = now.getDate();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const date = json.date || `${year}-${month}-${day}`
+      const team = json.team;
+      const author = json.author;
+      const desc = json.desc || "";
+      const copyright = json.copyright;
+      const items = [{
+        from: "\"date\": \"\",",
+        to: `\"date\": \"${date}\",`
+      }, {
+        from: "\"team\": \"\",",
+        to: `\"team\": \"${team}\",`
+      }, {
+        from: "\"author\": \"\",",
+        to: `\"author\": \"${author}\",`
+      }, {
+        from: "\"desc\": \"\",",
+        to: `\"desc\": \"${desc}\",`
+      }, {
+        from: "\"copyright\": \"\",",
+        to: `\"copyright\": \"${copyright}\",`
+      }];
+      const from = path.join(target, 'project.json');
+      const to = path.join(target, 'project.json');
+
+      this.fileReplaceContent(from, to, items);
+    }
 
     if (this.awtkPath) {
       const files = ['SConstruct', 'gen.sh', 'scripts/update_res.py'];
@@ -132,7 +164,7 @@ class CodeGen {
 
       files.forEach(iter => {
         const from = path.join(target, iter);
-        const to = path.join(target, iter)
+        const to = path.join(target, iter);
         this.fileReplaceContent(from, to, items);
       })
     }
