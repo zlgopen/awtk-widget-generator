@@ -134,7 +134,7 @@ class CodeGen {
       const desc = json.desc || "";
       const copyright = json.copyright;
       const version = json.version || "1.0.0";
-      const creatorVerison = json.creator.version || "0.1.5";
+      const creatorVerison = (json.creator && json.creator.version) ? json.creator.version : "0.1.5";
       const items = [{
         from: "\"version\": \"1.0.0\",",
         to: `\"version\": \"${version}\",`
