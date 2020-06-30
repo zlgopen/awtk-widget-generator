@@ -133,7 +133,12 @@ class CodeGen {
       const author = json.author;
       const desc = json.desc || "";
       const copyright = json.copyright;
+      const version = json.version || "1.0.0";
+      const creatorVerison = json.creator.version || "0.1.5";
       const items = [{
+        from: "\"version\": \"1.0.0\",",
+        to: `\"version\": \"${version}\",`
+      }, {
         from: "\"date\": \"\",",
         to: `\"date\": \"${date}\",`
       }, {
@@ -148,6 +153,9 @@ class CodeGen {
       }, {
         from: "\"copyright\": \"\",",
         to: `\"copyright\": \"${copyright}\",`
+      }, {
+        from: "\"name\": \"AWTK Designer\",\n    \"version\": \"0.1.5\"",
+        to: `\"name\": \"AWTK Designer\",\n    \"version\": \"${creatorVerison}\"`
       }];
       const from = path.join(target, 'project.json');
       const to = path.join(target, 'project.json');
