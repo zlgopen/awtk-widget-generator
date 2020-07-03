@@ -62,7 +62,6 @@ class CodeGen {
     items.forEach(iter => {
       const searchRegExp = new RegExp(iter.from, 'g');
       content = content.replace(searchRegExp, iter.to);
-      filename = filename.replace(searchRegExp, iter.to);
     })
 
     console.log(`write file ${filename}`);
@@ -118,8 +117,9 @@ class CodeGen {
     })
 
     files.forEach(iter => {
+      const searchRegExp = new RegExp('template', 'g');
       const from = path.join('template', iter);
-      const to = path.join(target, iter);
+      const to = path.join(target, iter.replace(searchRegExp, name));
       this.fileReplaceContent(from, to, items);
     })
 
@@ -647,8 +647,7 @@ static ret_t ${className}_on_event(widget_t* widget, event_t* e) {
   return RET_OK;
 }
 
-const char* s_${className}_properties[] = {
-${propList},
+const char* s_${className}_properties[] = {${propList.length <= 0 ? '': ('\n' + propList + ',')}
   NULL
 };
 
