@@ -31,7 +31,7 @@ def copyAwtkDLL():
     return
 
   if not os.path.exists(src):
-    print('Can\'t find awtk.dll. Please build AWTK before!')
+    print('Can\'t find ' + src + '. Please build AWTK before!')
   else:
     if not os.path.exists(APP_BIN_DIR):
         os.makedirs(APP_BIN_DIR)
