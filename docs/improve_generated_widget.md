@@ -10,7 +10,7 @@
 
 根据自己的需要完善 tests 目录下 xxx_test.cc。xxx 是实际控件的类型名。
 
-## 3. 完善控件的 style 文件
+## 3. 完善demo的控件 style
 
 根据自己的需要完善 design/default/styles/main.xml
 
