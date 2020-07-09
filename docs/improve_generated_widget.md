@@ -4,7 +4,7 @@
 ## 1. 完善控件的实现
 
 根据自己的需要完善 src 目录下的程序。
-> 关于注释规则，请参考 [API 注释格式](https://github.com/zlgopen/awtk/blob/master/docs/api_doc.md)
+> 关于自定义控件的更多说明，请参考 [自定义控件规范](https://github.com/zlgopen/awtk/blob/master/docs/custom_widget_rules.md)
 
 ## 2. 完善测试程序
 
