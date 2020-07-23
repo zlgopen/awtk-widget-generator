@@ -46,14 +46,7 @@
 
 ## 6. 编译运行
 
-* 1. 生成 IDL 和 动态库导出符号表
-
-```
-. gen.sh
-```
-> 注意: 如果执行失败，请确定gen.sh中的 awtk 路径是否正确
-
-* 2. 生成资源
+* 生成demo的资源
 
 可以使用资源生成工具 update_res.py 生成资源，更多信息请参考 [资源生成工具](../template/scripts/README.md)
 
@@ -63,17 +56,46 @@ python scripts/update_res.py all
 > 也可以使用 Designer 打开项目，之后点击 “打包” 按钮进行生成
 > 注意：如果资源发生修改，需要重新生成资源。
 
-* 3. 编译
+* 编译
 
 ```
-scons
+Usage: scons SHARED[true|false] IDL_DEF[true|false] LCD[800_480|...]
+Example:
+scons SHARED=false
+scons IDL_DEF=false
+scons LCD=480_272
+scons SHARED=false IDL_DEF=false LCD=480_272
 ```
-> 注意：
-> 编译前先确认 SConstruct 文件中的 awtk_root 是否为 awtk 所在目录，不是则修改。
-> 默认使用动态库的形式，如果需要使用静态库，修改 SConstruct 文件中的 BUILD_SHARED = 'false' 即可。
-
+参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为true。
+参数 IDL_DEF 是可选的，用于指定编译前是否重新生成idl.json和def文件，缺省为true。
+参数 LCD 是可选的，用于指定示例程序运行时的LCD尺寸，格式为“height_width”。
+> 注意：编译前先确定SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
 
 * 运行
+
 ```
  ./bin/demo
+```
+
+## 7. 注意事项
+
+* 修改依赖的AWTK
+
+如果需要依赖其他版本的AWTK，则重新设置AWTK的路径即可。有如下2个地方需要设置：
+(1) SConstruct 文件中的 awtk_root；
+(2) scripts/update_res.py 文件中的 awtk_root。
+设置后，按上述步骤重新编译运行。
+比如新的AWTK路径为 C:/AWTK/SDK/awtk，则可以设置如下：
+```python
+...
+def getAwtkRoot():
+  awtk_root = 'C:/AWTK/SDK/awtk'
+  if not os.path.exists(awtk_root):
+    dirnames = ['../awtk', '../../awtk', '../../../awtk']
+    for dirname in dirnames:
+      if os.path.exists(dirname):
+        awtk_root = dirname
+        break
+  return awtk_root
+...
 ```

@@ -37,7 +37,7 @@ class CodeGen {
 
   mkdirIfNotExist(name) {
     if (!fs.existsSync(name)) {
-      fs.mkdirSync(name);
+      fs.mkdirSync(name, {recursive : true});
     }
   }
 
@@ -70,7 +70,7 @@ class CodeGen {
 
   getTargetRoot(foldName) {
     if (this.outputPath) {
-      return this.outputPath;
+      return path.join(this.outputPath, 'awtk-widget-' + foldName);
     }
     return path.join('..', 'awtk-widget-' + foldName);
   }
@@ -164,10 +164,10 @@ class CodeGen {
     }
 
     if (this.awtkPath) {
-      const files = ['SConstruct', 'gen.sh', 'scripts/update_res.py'];
+      const files = ['SConstruct', 'scripts/update_res.py'];
       const items = [{
-        from: '\\.\\./awtk',
-        to: this.awtkPath
+        from: 'awtk_root = \'\\.\\./awtk\'',
+        to: 'awtk_root = ' + '\'' + this.awtkPath + '\''
       }];
 
       files.forEach(iter => {
