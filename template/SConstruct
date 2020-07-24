@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sys
 import platform
 import shutil
@@ -65,7 +65,7 @@ def saveUsesSdkInfo():
         component_json = json.loads(component_content)
         if 'release_id' in component_json:
           release_id = component_json['release_id']
-          if sys.version_info <= (3, 0):
+          if sys.version_info < (3, 0):
             release_id = release_id.encode('ascii')
 
   content  = '{\n' 
@@ -79,11 +79,11 @@ def saveUsesSdkInfo():
   content += '}'
 
   filename = os.path.join(APP_BIN_DIR, 'uses_sdk.json')
-  if sys.version_info > (3, 0):
-    with open(filename, 'w', encoding='utf8') as f:
+  if sys.version_info < (3, 0):
+    with open(filename, 'w') as f:
       f.write(content)
   else:
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf8') as f:
       f.write(content)
 
 
