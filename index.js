@@ -89,6 +89,7 @@ class CodeGen {
     }];
 
     const files = ['SConstruct',
+      'app_helper.py',
       'project.json',
       'gen.sh',
       'README.md',
