@@ -47,6 +47,7 @@ class CodeGen {
     const target = this.getTargetRoot(foldName);
 
     this.mkdirIfNotExist(target);
+    this.mkdirIfNotExist(path.join(target, 'bin'));
     this.mkdirIfNotExist(path.join(target, 'src'));
     this.mkdirIfNotExist(path.join(target, 'src', name));
     this.mkdirIfNotExist(path.join(target, 'tests'));
@@ -96,6 +97,7 @@ class CodeGen {
       'format.sh',
       '.clang-format',
       '.gitignore',
+      'bin/README.md',
       'src/SConscript',
       'demos/SConscript',
       'demos/window_main.c',

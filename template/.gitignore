@@ -7,7 +7,7 @@
 *.idb
 *.obj
 *.exe
-/bin
+/bin/demo
 /lib
 .sconsign.dblite
 lua/demo1
