@@ -10,7 +10,7 @@
 
 根据自己的需要完善 tests 目录下 xxx_test.cc。xxx 是实际控件的类型名。
 
-## 3. 完善demo的控件 style
+## 3. 完善 demo 的控件 style
 
 根据自己的需要完善 design/default/styles/main.xml
 
@@ -46,7 +46,7 @@
 
 ## 6. 编译运行
 
-* 生成demo的资源
+* 生成 demo 的资源
 
 可以使用资源生成工具 update_res.py 生成资源，更多信息请参考 [资源生成工具](../template/scripts/README.md)
 
@@ -59,17 +59,32 @@ python scripts/update_res.py all
 * 编译
 
 ```
-Usage: scons SHARED[true|false] IDL_DEF[true|false] LCD[800_480|...]
+Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB[true|false] THEME=[theme] LANGUAGE=[lang] FONT=[font]
+
 Example:
+
 scons SHARED=false
 scons IDL_DEF=false
 scons LCD=480_272
+scons LINUX_FB=true
 scons SHARED=false IDL_DEF=false LCD=480_272
 ```
-参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为true。
-参数 IDL_DEF 是可选的，用于指定编译前是否重新生成idl.json和def文件，缺省为true。
-参数 LCD 是可选的，用于指定示例程序运行时的LCD尺寸，格式为“height_width”。
-> 注意：编译前先确定SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
+
+* 参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为 true。
+
+* 参数 IDL_DEF 是可选的，用于指定编译前是否重新生成 idl.json 和 def 文件，缺省为 true。
+
+* 参数 LCD 是可选的，用于指定示例程序运行时的 LCD 尺寸，格式为“height_width”。
+
+* 参数 LINUX_FB 是可选的，是否编译 linux framebuffer 版本。
+
+* 参数 FONT 是可选的，用于指定字体（如缺省为 default)。
+
+* 参数 THEME 是可选的，用于指定主题（如缺省为 default)。
+
+* 参数 LANGUAGE 是可选的，用于指定语言（如缺省为 zh_CN)。
+
+> 注意：编译前先确定 SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
 
 * 运行
 
@@ -79,13 +94,13 @@ scons SHARED=false IDL_DEF=false LCD=480_272
 
 ## 7. 注意事项
 
-* 修改依赖的AWTK
+* 修改依赖的 AWTK
 
-如果需要依赖其他版本的AWTK，则重新设置AWTK的路径即可。有如下2个地方需要设置：
-(1) SConstruct 文件中的 awtk_root；
+如果需要依赖其他版本的 AWTK，则重新设置 AWTK 的路径即可。有如下 2 个地方需要设置：
+(1) app_helper.py 文件中的 awtk_root；
 (2) scripts/update_res.py 文件中的 awtk_root。
 设置后，按上述步骤重新编译运行。
-比如新的AWTK路径为 C:/AWTK/SDK/awtk，则可以设置如下：
+比如新的 AWTK 路径为 C:/AWTK/SDK/awtk，则可以设置如下：
 ```python
 ...
 def getAwtkRoot():
