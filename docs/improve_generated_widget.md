@@ -46,7 +46,7 @@
 
 ## 6. 编译运行
 
-* 生成 demo 的资源
+### 6.1 生成 demo 的资源
 
 可以使用资源生成工具 update_res.py 生成资源，更多信息请参考 [资源生成工具](../template/scripts/README.md)
 
@@ -56,18 +56,13 @@ python scripts/update_res.py all
 > 也可以使用 Designer 打开项目，之后点击 “打包” 按钮进行生成
 > 注意：如果资源发生修改，需要重新生成资源。
 
-* 编译
+
+### 6.2 编译
+
+#### 6.2.1 编译选项
 
 ```
 Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB[true|false] THEME=[theme] LANGUAGE=[lang] FONT=[font]
-
-Example:
-
-scons SHARED=false
-scons IDL_DEF=false
-scons LCD=480_272
-scons LINUX_FB=true
-scons SHARED=false IDL_DEF=false LCD=480_272
 ```
 
 * 参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为 true。
@@ -86,7 +81,26 @@ scons SHARED=false IDL_DEF=false LCD=480_272
 
 > 注意：编译前先确定 SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
 
-* 运行
+#### 6.2.2 示例
+
+> 缺省编译
+
+```
+scons
+```
+
+> 指定 LCD 大小
+
+```
+scons LCD=480_272
+```
+
+> 编译 linux fb 版本
+```
+scons LINUX_FB=true
+```
+
+### 6.3 运行
 
 ```
  ./bin/demo

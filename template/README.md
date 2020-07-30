@@ -24,18 +24,13 @@ python scripts/update_res.py all
 > 如果资源发生修改，则需要重新生成资源。
 
 
+
 2. 编译
+
+* 编译选项
 
 ```
 Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB[true|false] THEME=[theme] LANGUAGE=[lang] FONT=[font]
-
-Example:
-
-scons SHARED=false
-scons IDL_DEF=false
-scons LCD=480_272
-scons LINUX_FB=true
-scons SHARED=false IDL_DEF=false LCD=480_272
 ```
 
 * 参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为 true。
@@ -51,6 +46,27 @@ scons SHARED=false IDL_DEF=false LCD=480_272
 * 参数 THEME 是可选的，用于指定主题（如缺省为 default)。
 
 * 参数 LANGUAGE 是可选的，用于指定语言（如缺省为 zh_CN)。
+
+> 注意：编译前先确定 SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
+
+* 示例
+
+> 缺省编译
+
+```
+scons
+```
+
+> 指定 LCD 大小
+
+```
+scons LCD=480_272
+```
+
+> 编译 linux fb 版本
+```
+scons LINUX_FB=true
+```
 
 3. 运行
 
