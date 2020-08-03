@@ -30,7 +30,7 @@ class CodeGen {
   }
 
   getFolderName(json) {
-    const name = json.name.replace(/_/, '-');
+    const name = json.name.replace(/_/g, '-');
 
     return name;
   }
