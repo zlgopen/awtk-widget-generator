@@ -117,14 +117,18 @@ scons LINUX_FB=true
 比如新的 AWTK 路径为 C:/AWTK/SDK/awtk，则可以设置如下：
 ```python
 ...
-def getAwtkRoot():
-  awtk_root = 'C:/AWTK/SDK/awtk'
-  if not os.path.exists(awtk_root):
-    dirnames = ['../awtk', '../../awtk', '../../../awtk']
-    for dirname in dirnames:
-      if os.path.exists(dirname):
-        awtk_root = dirname
-        break
-  return awtk_root
+    def getAwtkRoot(self):
+      awtk = 'awtk'
+      if self.LINUX_FB:
+          awtk = 'awtk-linux-fb'
+
+      awtk_root = 'C:/AWTK/SDK/' + awtk
+      if not os.path.exists(awtk_root):
+          dirnames = ['../'+awtk, '../../'+awtk, '../../../'+awtk]
+          for dirname in dirnames:
+              if os.path.exists(dirname):
+                  awtk_root = dirname
+                  break
+      return os.path.abspath(awtk_root)
 ...
 ```

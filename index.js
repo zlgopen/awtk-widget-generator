@@ -715,6 +715,16 @@ BEGIN_C_DECLS
  */
 ret_t ${className}_register(void);
 
+/**
+ * @method  ${className}_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* ${className}_supported_render_mode(void);
+
 END_C_DECLS
 
 #endif /*TK_${uclassName}_REGISTER_H*/
@@ -742,6 +752,10 @@ ${defaultInclude}
 
 ret_t ${className}_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_${uclassName}, ${className}_create);
+}
+
+const char* ${className}_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }
 `
     return result;

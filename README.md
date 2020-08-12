@@ -4,7 +4,7 @@
 
 本代码生成器依赖于 [nodejs](https://nodejs.org/zh-cn/)，需要先安装 [nodejs](https://nodejs.org/zh-cn/)。
 
-然后安装 fs-extra 模块
+然后通过在终端中执行如下命令以安装 fs-extra 模块。
 
 ```
 npm install -g fs-extra
