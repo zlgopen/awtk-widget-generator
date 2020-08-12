@@ -4,6 +4,11 @@ import json
 import shutil
 import platform
 
+def mkdir_if_not_exist(fullpath):
+    if os.path.exists(fullpath):
+        print(fullpath+' exist.')
+    else:
+        os.makedirs(fullpath)
 
 class Helper:
     def set_deps(self, DEPENDS_LIBS):
@@ -71,6 +76,9 @@ class Helper:
         self.APP_LIB_DIR = os.path.join(APP_ROOT, 'lib')
         self.APP_SRC = os.path.join(APP_ROOT, 'src')
 
+        mkdir_if_not_exist(self.APP_BIN_DIR);
+        mkdir_if_not_exist(self.APP_LIB_DIR);
+
         sys.path.insert(0, self.AWTK_ROOT)
         import awtk_config as awtk
 
@@ -122,7 +130,7 @@ class Helper:
                 f.write(content)
 
     def isBuildShared(self):
-        return 'WITH_AWTK_SO' in os.environ and os.environ['WITH_AWTK_SO'] == 'true' and self.BUILD_SHARED == True
+        return 'WITH_AWTK_SO' in os.environ and os.environ['WITH_AWTK_SO'] == 'true' and self.BUILD_SHARED
 
     def copyAwtkSharedLib(self):
         self.awtk.copySharedLib(self.AWTK_ROOT, self.APP_BIN_DIR, 'awtk')
@@ -253,7 +261,7 @@ class Helper:
         self.APP_CXXFLAGS = self.APP_CCFLAGS
 
     def prepare(self):
-        if self.GEN_IDL_DEF:
+        if self.GEN_IDL_DEF and not self.LINUX_FB:
             self.genIdlAndDef()
 
         if self.isBuildShared():
