@@ -90,7 +90,6 @@ class CodeGen {
     }];
 
     const files = ['SConstruct',
-      'app_helper.py',
       'project.json',
       'gen.sh',
       'README.md',
@@ -102,6 +101,10 @@ class CodeGen {
       'demos/SConscript',
       'demos/window_main.c',
       'demos/app_main.c',
+      'scripts/README.md',
+      'scripts/__init__.py',
+      'scripts/app_helper.py',
+      'scripts/awtk_locator.py',
       'scripts/update_res.py',
       'tests/SConscript',
       'tests/main.cc',
@@ -263,6 +266,7 @@ ret_t ${className}_set_${iter.name}(widget_t* widget, ${this.genParamDecl(iter.t
   genHeader(json) {
     const desc = json.desc || "";
     const className = json.name;
+    const escapeClassName = className.replace(/_/g, '\\_');
     const uclassName = className.toUpperCase();
     const propDecls = this.genPropDecls(json);
     const propSetterDecls = this.genPropSetterDecls(json);
@@ -281,6 +285,23 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * ${desc}
+ * 在xml中使用"${escapeClassName}"标签创建数值文本控件。如：
+ *
+ * \`\`\`xml
+ * <!-- ui -->
+ * <${className} x="c" y="50" w="24" h="140" value="-128"/>
+ * \`\`\`
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 
+ * \`\`\`xml
+ * <!-- style -->
+ * <${className}>
+ *   <style name="default" font_size="32">
+ *     <normal text_color="black" />
+ *   </style>
+ * </${className}>
+ * \`\`\`
  */
 typedef struct _${className}_t {
   widget_t widget;
