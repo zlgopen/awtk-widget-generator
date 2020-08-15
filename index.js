@@ -285,11 +285,11 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * ${desc}
- * 在xml中使用"${escapeClassName}"标签创建数值文本控件。如：
+ * 在xml中使用"${escapeClassName}"标签创建控件。如：
  *
  * \`\`\`xml
  * <!-- ui -->
- * <${className} x="c" y="50" w="24" h="140" value="-128"/>
+ * <${className} x="c" y="50" w="100" h="100"/>
  * \`\`\`
  *
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
