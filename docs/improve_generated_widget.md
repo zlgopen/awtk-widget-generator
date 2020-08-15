@@ -4,6 +4,7 @@
 ## 1. 完善控件的实现
 
 根据自己的需要完善 src 目录下的程序。
+
 > 关于自定义控件的更多说明，请参考 [自定义控件规范](https://github.com/zlgopen/awtk/blob/master/docs/custom_widget_rules.md)
 
 ## 2. 完善测试程序
@@ -110,25 +111,32 @@ scons LINUX_FB=true
 
 * 修改依赖的 AWTK
 
-如果需要依赖其他版本的 AWTK，则重新设置 AWTK 的路径即可。有如下 2 个地方需要设置：
-(1) app_helper.py 文件中的 awtk_root；
-(2) scripts/update_res.py 文件中的 awtk_root。
-设置后，按上述步骤重新编译运行。
-比如新的 AWTK 路径为 C:/AWTK/SDK/awtk，则可以设置如下：
+如果需要依赖其他版本的 AWTK，则重新设置 AWTK 的路径即可。
+
+AWTK 的路径由 scripts/awtk_locator.py 文件中的 locateAWTK 函数指定，一般只需修改函数内的 awtk_root。
+
+比如新的 AWTK 路径为 C:/AWTK/SDK/awtk，则可以将  scripts/awtk_locator.py 文件修改如下：
+
 ```python
 ...
-    def getAwtkRoot(self):
-      awtk = 'awtk'
-      if self.LINUX_FB:
-          awtk = 'awtk-linux-fb'
+    def getAwtkRoot():
+        return locateAWTK('awtk')
 
-      awtk_root = 'C:/AWTK/SDK/' + awtk
-      if not os.path.exists(awtk_root):
-          dirnames = ['../'+awtk, '../../'+awtk, '../../../'+awtk]
-          for dirname in dirnames:
-              if os.path.exists(dirname):
-                  awtk_root = dirname
-                  break
-      return os.path.abspath(awtk_root)
+
+    def getAwtkLinuxFbRoot():
+        return locateAWTK('awtk-linux-fb')
+
+
+    def locateAWTK(awtk):
+        awtk_root = 'C:/AWTK/SDK/' + awtk
+        if not os.path.exists(awtk_root):
+            dirnames = ['../'+awtk, '../../'+awtk, '../../../'+awtk]
+            for dirname in dirnames:
+                if os.path.exists(dirname):
+                    awtk_root = dirname
+                    break
+        return os.path.abspath(awtk_root)
 ...
 ```
+
+修改后，按第 6 章节的步骤重新编译运行。
