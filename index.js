@@ -170,16 +170,13 @@ class CodeGen {
     }
 
     if (this.awtkPath) {
-      const files = ['app_helper.py', 'scripts/update_res.py'];
+      const files = ['scripts/awtk_locator.py'];
       const items = [{
-        from: 'awtk_root = \'\\.\\./awtk\'',
-        to: 'awtk_root = ' + '\'' + this.awtkPath + '\''
+        from: '\'awtk\'',
+        to: '\'' + path.basename(this.awtkPath) + '\''
       },{
-        from: '        awtk = \'awtk\'',
-        to: '        awtk = \'' + path.basename(this.awtkPath) + '\''
-      },{
-        from: '        awtk_root = \'\\.\\./\' \\+ awtk',
-        to: '        awtk_root = \'' + path.dirname(this.awtkPath) + '/\' + awtk'
+        from: '    awtk_root = \'\\.\\./\' \\+ awtk',
+        to: '    awtk_root = \'' + path.dirname(this.awtkPath) + '/\' + awtk'
       }];
 
       files.forEach(iter => {

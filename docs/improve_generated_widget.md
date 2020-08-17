@@ -115,12 +115,16 @@ scons LINUX_FB=true
 
 AWTK 的路径由 scripts/awtk_locator.py 文件中的 locateAWTK 函数指定，一般只需修改函数内的 awtk_root。
 
-比如新的 AWTK 路径为 C:/AWTK/SDK/awtk，则可以将  scripts/awtk_locator.py 文件修改如下：
+比如新的 AWTK 路径为 C:/AWTK/SDK/awtk_agge，则可以将  scripts/awtk_locator.py 文件修改如下：
 
 ```python
 ...
+    def getAwtkScriptsRoot():
+        return os.path.join(locateAWTK('awtk_agge'), 'scripts')
+
+
     def getAwtkRoot():
-        return locateAWTK('awtk')
+        return locateAWTK('awtk_agge')
 
 
     def getAwtkLinuxFbRoot():
