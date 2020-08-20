@@ -24,17 +24,7 @@ python scripts/update_res.py all
 > 如果资源发生修改，则需要重新生成资源。
 
 
-
 2. 编译
-
-* 生成资源
-
-```
-python ./scripts/update_res.py all
-```
-
-> 或者通过 designer 生成资源
-
 
 * 编译PC版本
 
