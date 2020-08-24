@@ -1,6 +1,14 @@
 
 # 1 编译选项
 
+## 安装nodejs
+
+由于生成.def文件，需要用到[nodejs](https://nodejs.org/en/download/)，请先安装nodejs，并安装相关模块：
+
+```
+npm install -g glob
+```
+
 ## 介绍
 
 ```
