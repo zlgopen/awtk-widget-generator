@@ -1,9 +1,9 @@
 
 # 1 编译选项
 
-## 安装nodejs
+## 安装 nodejs
 
-由于生成.def文件，需要用到[nodejs](https://nodejs.org/en/download/)，请先安装nodejs，并安装相关模块：
+由于生成。def 文件，需要用到 [nodejs](https://nodejs.org/en/download/)，请先安装 nodejs，并安装相关模块：
 
 ```
 npm install -g glob
@@ -31,7 +31,6 @@ Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB
 
 > 注意：编译前先确定 SConstruct 文件中的 awtk_root 为 awtk 所在目录，否则会编译失败。
 
-
 ## 示例：
 
 > 缺省编译
@@ -47,7 +46,23 @@ scons LCD=480_272
 ```
 
 > 编译 linux fb 版本
+
 ```
 scons LINUX_FB=true
 ```
 
+## 编译 linux-fb 版本需要按下列步骤进行
+
+* 编译 awtk，生成 fontgen 之类的工具。
+
+> 这些工具在 PC 上运行，无需交叉编译，编译一次即可。
+
+* 编译 awtk-linux-fb
+
+> 根据自己的情况配置交叉编译工具，编译一次即可。
+
+* 编译自己的项目
+
+```
+scons LINUX_FB=true
+```
