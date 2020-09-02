@@ -55,9 +55,17 @@ scons LINUX_FB=true
 
 * 编译 awtk，生成 fontgen 之类的工具。
 
+```
+scons
+```
+
 > 这些工具在 PC 上运行，无需交叉编译，编译一次即可。
 
 * 编译 awtk-linux-fb
+
+```
+scons
+```
 
 > 根据自己的情况配置交叉编译工具，编译一次即可。
 
