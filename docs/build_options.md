@@ -29,7 +29,11 @@ Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB
 
 * 参数 LANGUAGE 是可选的，用于指定语言（如缺省为 zh\_CN)。
 
-> 注意：编译前先确定 SConstruct 文件中的 awtk\_root 为 awtk 所在目录，否则会编译失败。
+* 参数 AWTK_ROOT 是可选的，用于指定依赖的 AWTK 的路径。
+
+> 注意：
+> AWTK_ROOT 默认指向 AWTK Designer 安装目录中的 awtk，如果不存在则会尝试在当前工作目录的上3级目录中查找。
+> AWTK Designer 安装时会默认在系统环境变量中添加 AWTK_DESIGNER_PATH，用于指向 AWTK Designer 的安装目录，如果没有可自行添加。
 
 ## 示例：
 
