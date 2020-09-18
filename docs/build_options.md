@@ -12,7 +12,7 @@ npm install -g glob
 ## 介绍
 
 ```
-Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB[true|false] THEME=[theme] LANGUAGE=[lang] FONT=[font]
+Usage: scons SHARED=[true|false] IDL_DEF=[true|false] LCD=[800_480|...] LINUX_FB[true|false] THEME=[theme] LANGUAGE=[lang] FONT=[font] AWTK_ROOT=[C:/AWTK/SDK/awtk]
 ```
 
 * 参数 SHARED 是可选的，用于指定是否编译生成动态库，缺省为 true。
