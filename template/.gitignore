@@ -10,6 +10,9 @@
 *.os
 *.pyc
 .sconsign.dblite
+design/**/ui/*.bin
+design/**/strings/*.bin
+design/**/styles/*.bin
 lua/demo1
 lua/lftk_run
 tags
