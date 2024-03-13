@@ -26,7 +26,7 @@ class CodeGen {
 
   genSourceCode(json) {
     this.saveResult(json, this.genHeader(json), this.genContent(json));
-    this.saveResult(json, this.genRegisterHeader(json), this.genRegisterContent(json),`src/${json.name}_register`);
+    this.saveResult(json, this.genRegisterHeader(json), this.genRegisterContent(json), `src/${json.name}_register`);
   }
 
   getFolderName(json) {
@@ -37,7 +37,7 @@ class CodeGen {
 
   mkdirIfNotExist(name) {
     if (!fs.existsSync(name)) {
-      fs.mkdirSync(name, {recursive : true});
+      fs.mkdirSync(name, { recursive: true });
     }
   }
 
@@ -174,7 +174,7 @@ class CodeGen {
       const items = [{
         from: '\'awtk\'',
         to: '\'' + path.basename(this.awtkPath) + '\''
-      },{
+      }, {
         from: '    awtk_root = \'\\.\\./\' \\+ awtk',
         to: '    awtk_root = \'' + path.dirname(this.awtkPath) + '/\' + awtk'
       }];
@@ -553,9 +553,10 @@ ret_t ${className}_set_${iter.name}(widget_t* widget, ${paramDecl}) {
       if (iter.init_value) {
         if (iter.type === 'char*') {
           return `  ${className}->${iter.name} = tk_strdup("${iter.init_value}");\n`;
-        }else if (iter.type === 'bool_t') {
+        } else if (iter.type == 'bool_t') {
+          return `  ${className}->${iter.name} = ${iter.init_value ? "TRUE" : "FALSE"};\n`;
         } else {
-          return `  ${className}->${iter.name} = ${iter.init_value ? "TRUE" :"FALSE"};\n`;
+          return `  ${className}->${iter.name} = ${iter.init_value};\n`;
         }
       }
     }).join('');
@@ -675,7 +676,7 @@ static ret_t ${className}_on_event(widget_t* widget, event_t* e) {
   return RET_OK;
 }
 
-const char* s_${className}_properties[] = {${propList.length <= 0 ? '': ('\n' + propList + ',')}
+const char* s_${className}_properties[] = {${propList.length <= 0 ? '' : ('\n' + propList + ',')}
   NULL
 };
 
