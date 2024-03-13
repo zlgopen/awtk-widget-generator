@@ -553,8 +553,9 @@ ret_t ${className}_set_${iter.name}(widget_t* widget, ${paramDecl}) {
       if (iter.init_value) {
         if (iter.type === 'char*') {
           return `  ${className}->${iter.name} = tk_strdup("${iter.init_value}");\n`;
+        }else if (iter.type === 'bool_t') {
         } else {
-          return `  ${className}->${iter.name} = ${iter.init_value};\n`;
+          return `  ${className}->${iter.name} = ${iter.init_value ? "TRUE" :"FALSE"};\n`;
         }
       }
     }).join('');
