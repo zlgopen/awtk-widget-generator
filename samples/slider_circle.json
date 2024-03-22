@@ -38,7 +38,7 @@
       "type":"uint16_t"
     },
     {
-      "name":"end_angel",
+      "name":"end_angle",
       "desc":"最大值对应的角度。",
       "init_value":360,
       "type":"uint16_t"

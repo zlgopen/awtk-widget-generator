@@ -21,3 +21,6 @@ lib/*
 .vscode
 .vs
 __pycache__
+idl/idl.json
+src/*.def
+res
