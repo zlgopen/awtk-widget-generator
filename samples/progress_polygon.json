@@ -1,0 +1,34 @@
+{
+  "name":"progress_polygon",
+  "date":"2024-04-23",
+  "team":"AWTK Develop Team",
+  "author":"Li XianJing <xianjimli@hotmail.com>",
+  "desc":"异形进度条。",
+  "copyright":"Guangzhou ZHIYUAN Electronics Co.,Ltd.",
+  "includes":[],
+  "props": [
+    {
+      "name":"value",
+      "desc":"值。",
+      "init_value":0,
+      "type":"double"
+    },
+    {
+      "name":"min",
+      "desc":"最小值。",
+      "init_value":0,
+      "type":"double"
+    },
+    {
+      "name":"max",
+      "desc":"最大值。",
+      "init_value":100,
+      "type":"double"
+    },
+    {
+      "name":"polygon",
+      "desc":"多边形描述",
+      "type":"char*"
+    }
+  ]
+}
