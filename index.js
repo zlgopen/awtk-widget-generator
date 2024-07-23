@@ -686,9 +686,9 @@ TK_DECL_VTABLE(${className}) = {.size = sizeof(${className}_t),
                           .persistent_properties = s_${className}_properties,
                           .parent = TK_PARENT_VTABLE(widget),
                           .create = ${className}_create,
-                          .on_paint_self = ${className}_on_paint_self,
-                          .set_prop = ${className}_set_prop,
                           .get_prop = ${className}_get_prop,
+                          .set_prop = ${className}_set_prop,
+                          .on_paint_self = ${className}_on_paint_self,
                           .on_event = ${className}_on_event,
                           .on_destroy = ${className}_on_destroy};
 
