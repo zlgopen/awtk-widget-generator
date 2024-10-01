@@ -14,9 +14,8 @@ if OS_NAME == 'Windows' and os.environ['TOOLS_NAME'] == '':
   EXPORT_DEF = ' /DEF:"src/template.def" '
 
 if 'BUILD_SHARED' in os.environ and os.environ['BUILD_SHARED'] == 'True':
-  LIBS=['awtk'];
   LINKFLAGS=env['LINKFLAGS'] + EXPORT_DEF 
-  env.SharedLibrary(os.path.join(BIN_DIR, 'template'), SOURCES, LIBS=LIBS, LINKFLAGS=LINKFLAGS);
+  env.SharedLibrary(os.path.join(BIN_DIR, 'template'), SOURCES, LINKFLAGS=LINKFLAGS);
 else:
   env.Library(os.path.join(LIB_DIR, 'template'), SOURCES);
 

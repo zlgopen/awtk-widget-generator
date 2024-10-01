@@ -6,4 +6,5 @@ BIN_DIR=os.environ['BIN_DIR'];
 
 src_files = Glob('*.c')
 
+env['LIBS'] = ['template'] + env['LIBS']
 env.Program(os.path.join(BIN_DIR, 'demo'), src_files);
