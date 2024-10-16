@@ -10,8 +10,11 @@ env=DefaultEnvironment().Clone()
 SOURCES=Glob('template/*.c')+Glob('*.c')
 
 EXPORT_DEF=''
-if OS_NAME == 'Windows' and os.environ['TOOLS_NAME'] == '':
-  EXPORT_DEF = ' /DEF:"src/template.def" '
+if OS_NAME == 'Windows' :
+  if os.environ['TOOLS_NAME'] == '' :
+    EXPORT_DEF = ' /DEF:"src/template.def" '
+  elif os.environ['TOOLS_NAME'] == 'mingw' :
+    EXPORT_DEF = ' "src/template.def" '
 
 if 'BUILD_SHARED' in os.environ and os.environ['BUILD_SHARED'] == 'True':
   LINKFLAGS=env['LINKFLAGS'] + EXPORT_DEF 
